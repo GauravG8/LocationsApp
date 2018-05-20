@@ -44,6 +44,7 @@
                     android:drawableTop="@drawable/ic_location"
                     android:drawableTint="@color/colorAccent"
                     android:drawablePadding="10dp"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:paddingTop="5dp"
                     android:textColor="@color/colorPrimaryDark"
                     tools:text="Sydney Harbour Bridge"
