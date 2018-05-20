@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4
 import com.mylocations.extensions.getValueBlocking
 import com.mylocations.repository.local.AppDatabase
 import com.mylocations.repository.models.CustomLocation
+import com.mylocations.utils.Config
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -24,7 +25,7 @@ open class LocationDaoTest : Db(){
 
     @Test
     fun insertLocationTest(){
-        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_CUSTOM)
         val id = appDatabase.localLocationModel().addLocation(location)
         assertEquals(id, 1)
         val locationLiveData = appDatabase.localLocationModel().getLocation(id.toString())
@@ -34,7 +35,7 @@ open class LocationDaoTest : Db(){
 
     @Test
     fun updateLocationNotesTest(){
-        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_CUSTOM)
         val id = appDatabase.localLocationModel().addLocation(location)
 
         appDatabase.localLocationModel().updateNotes(id.toString(), "Sydney Opera House")
@@ -45,7 +46,7 @@ open class LocationDaoTest : Db(){
 
     @Test
     fun deleteLocationTest(){
-        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_CUSTOM)
         val id = appDatabase.localLocationModel().addLocation(location)
 
         var locationLiveData = appDatabase.localLocationModel().getLocation(id.toString())
@@ -59,7 +60,7 @@ open class LocationDaoTest : Db(){
 
     @Test
     fun getUserTest(){
-        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_CUSTOM)
         val id = appDatabase.localLocationModel().addLocation(location)
 
         val locationLiveData = appDatabase.localLocationModel().getLocation(id.toString())
@@ -69,10 +70,10 @@ open class LocationDaoTest : Db(){
 
     @Test
     fun getAllUsers(){
-        var location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        var location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_CUSTOM)
         var id = appDatabase.localLocationModel().addLocation(location)
 
-        location = CustomLocation("Opera house1", "Opera house1", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        location = CustomLocation("Opera house1", "Opera house1", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_CUSTOM)
         id = appDatabase.localLocationModel().addLocation(location)
 
         val locationLiveData = appDatabase.localLocationModel().getAllLocations()

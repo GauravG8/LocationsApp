@@ -14,10 +14,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 class AddLocationTest : Db(){
 
     private lateinit var viewModel: AddLocationViewModel
@@ -37,7 +38,6 @@ class AddLocationTest : Db(){
     fun saveLocationTest(){
         viewModel.saveLocation()
         assertEquals(viewModel.nameError.value, Config.LOCATION_NAME_ERROR)
-        assertEquals(viewModel.notesError.value, Config.LOCATION_NOTES_ERROR)
         viewModel.name.set("Sydney")
         viewModel.notes.set("Sydney notes")
         val address = Address(Locale.getDefault())

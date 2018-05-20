@@ -10,12 +10,14 @@ import android.support.test.runner.AndroidJUnit4
 import com.mylocations.dao.Db
 import com.mylocations.extensions.getValueBlocking
 import com.mylocations.repository.models.CustomLocation
+import com.mylocations.utils.Config
 import org.junit.After
 import org.junit.Rule
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import java.io.IOException
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 class LocationDetailsUnitTest : Db(){
 
     private lateinit var viewModel : LocationDetailViewModel
@@ -34,8 +36,8 @@ class LocationDetailsUnitTest : Db(){
     @Test
     fun updateNotes_Test(){
         val location = insertLocation()
-        viewModel.id = location?.id.toString()
         viewModel.notes.set("Sydney Opera House")
+        viewModel.location.set(location)
         viewModel.updateNotes()
         //val locationLiveData = appDatabase.localLocationModel().getLocation(location?.id.toString())
         val locationLiveData = viewModel.getLocation(location?.id.toString())
@@ -46,7 +48,7 @@ class LocationDetailsUnitTest : Db(){
     }
 
     fun insertLocation() : CustomLocation?{
-        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia")
+        val location = CustomLocation("Opera house", "Opera house", 13.4323, 87.123, "Sydeny opera house, NSW, Australia", Config.LOCATION_TYPE_DEFAULT)
         val id = appDatabase.localLocationModel().addLocation(location)
         val locationLiveData = viewModel.getLocation(id.toString())
         val locationFromDb = locationLiveData?.getValueBlocking()

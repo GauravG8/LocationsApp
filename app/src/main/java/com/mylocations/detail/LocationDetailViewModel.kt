@@ -14,13 +14,6 @@ import com.mylocations.utils.Config
 class LocationDetailViewModel : ViewModel() {
 
     var repository: Repository = MyApplication.getRepository()
-
-    //Observable fields for data binding
-    /*val name = ObservableField<String>()
-    val notes = ObservableField<String>()
-    val latitude = ObservableField<Double>()
-    val longitude = ObservableField<Double>()
-    val address = ObservableField<String>()*/
     val notes = ObservableField<String>()
     val location = ObservableField<CustomLocation>()
     val editing = ObservableField<Boolean>(false)
@@ -62,6 +55,4 @@ class LocationDetailViewModel : ViewModel() {
         this.location.set(location)
         notes.set(location.locationNotes)
     }
-
-    fun setStarVisibility() = if (location.get()?.type == Config.LOCATION_TYPE_DEFAULT) VISIBLE else GONE
 }

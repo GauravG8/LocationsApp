@@ -13,6 +13,6 @@ fun <T> LiveData<T>.getValueBlocking(): T? {
         latch.countDown()
     }
     observeForever(observer)
-    latch.await(2, TimeUnit.SECONDS)
+    latch.await(5, TimeUnit.SECONDS)
     return value
 }
