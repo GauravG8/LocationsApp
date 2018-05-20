@@ -1,6 +1,10 @@
 # LocationsApp
 An android pp to show locations of common places in Sydney. Users can view default locations and add custom locations as well. All the locations are persisted locally.
 
+## Screenshots
+
+![](screenshots/img111.jpg)   ![](screenshots/img222.jpg)   ![](screenshots/img333.jpg)   ![](screenshots/img444.jpg)
+
 ## Assumptions
 
 * Default locations are imported from the JSON files on first launch of the app and stored locally.
