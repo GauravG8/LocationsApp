@@ -3,7 +3,7 @@ An android pp to show locations of common places in Sydney. Users can view defau
 
 ## Screenshots
 
-![](screenshots/img111.jpg)   ![](screenshots/img222.jpg)   ![](screenshots/img333.jpg)   ![](screenshots/img444.jpg)
+![](screenshots/img1.jpg)   ![](screenshots/img2.jpg)   ![](screenshots/img3.jpg)   ![](screenshots/img4.jpg)
 
 ## Assumptions
 
