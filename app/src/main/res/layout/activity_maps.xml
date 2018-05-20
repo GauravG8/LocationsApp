@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View" />
+        <import type="com.mylocations.R" />
+        <variable
+            name="viewModel"
+            type="com.mylocations.map.MapViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include android:id="@+id/toolbar" layout="@layout/toolbar_main" />
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:map="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/toolbar"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="70dp"
+                tools:context=".map.MapsActivity" />
+
+            <RelativeLayout
+                android:id="@+id/list_items"
+                android:layout_alignParentBottom="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:onClick="@{() -> viewModel.listItems()}"
+                android:visibility="@{viewModel.isSelecting ? View.INVISIBLE : View.VISIBLE}"
+                android:animateLayoutChanges="true"
+                android:layout_height="70dp" >
+
+                <TextView
+                    android:id="@+id/item_count"
+                    android:textSize="22sp"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@{viewModel.itemCount}"
+                    android:drawableLeft="@drawable/ic_list"
+                    android:drawablePadding="10dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/select_location"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="@{viewModel.isSelecting ? View.VISIBLE : View.INVISIBLE}"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:onClick="@{() -> viewModel.selectLocation()}"
+                android:background="@color/md_black_1000"
+                android:animateLayoutChanges="true"
+                android:layout_height="70dp">
+
+                <TextView
+                    android:id="@+id/marked_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_white_1000"
+                    android:text="@string/select_to_continue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/marked_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/md_white_1000"
+                    android:text="@{viewModel.markedText}"
+                    android:tag="@{viewModel.address}"
+                    tools:text="mayor sivaraj street, royapettah, chennai, india 600014"
+                    android:layout_below="@+id/marked_title"/>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{viewModel.isSelecting ? @drawable/ic_close_white: @drawable/ic_add_location_white}"
+            android:id="@+id/add_location"
+            android:onClick="@{() -> viewModel.fabClicked()}"
+            app:fabSize="normal"
+            app:useCompatPadding="true"
+            app:layout_anchor="@+id/list_items"
+            app:layout_anchorGravity="top|end" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
