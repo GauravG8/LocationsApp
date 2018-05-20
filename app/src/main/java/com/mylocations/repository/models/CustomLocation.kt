@@ -13,7 +13,7 @@ import android.arch.persistence.room.PrimaryKey
  * @param address - address in string
  */
 @Entity
-class CustomLocation(var locationName: String?, var locationNotes: String?, var latitude: Double, var longitude: Double, var address: String?) {
+class CustomLocation(var locationName: String?, var locationNotes: String?, var latitude: Double, var longitude: Double, var address: String?, var type: Int) {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

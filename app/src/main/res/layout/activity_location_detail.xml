@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View" />
+        <import type="com.mylocations.utils.Config" />
         <variable
             name="viewModel"
             type="com.mylocations.detail.LocationDetailViewModel" />
@@ -29,16 +30,25 @@
             android:layout_margin="20dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="6dp"
-            app:contentPadding="10dp"
+            app:contentPadding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:visibility="@{viewModel.location.type == Config.LOCATION_TYPE_DEFAULT ? View.VISIBLE : View.INVISIBLE}"
+                    android:src="@drawable/ic_star"/>
 
                 <TextView
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:drawableTop="@drawable/ic_location"
@@ -50,7 +60,7 @@
                     tools:text="Sydney Harbour Bridge"
                     android:textSize="18sp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.name}"
+                    android:text="@{viewModel.location.locationName}"
                     android:id="@+id/name" />
 
                 <TextView
@@ -62,10 +72,10 @@
                     android:textColor="@color/md_black_1000"
                     tools:text="Sydney Harbour Bridge"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.address}"
+                    android:text="@{viewModel.location.address}"
                     android:id="@+id/address" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </android.support.v7.widget.CardView>

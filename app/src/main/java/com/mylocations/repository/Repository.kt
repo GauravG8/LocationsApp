@@ -50,7 +50,7 @@ class Repository(val localRepository: LocalRepository?, val remoteRepository: Re
                 val list = ArrayList<CustomLocation>()
                 for (item in responseModel.locations){
                     val address = Config.getAddressFromLatLng(geoCoder, item.lat, item.lng)
-                    list.add(CustomLocation(item.name, "Notes: ${item.name}", item.lat, item.lng, address))
+                    list.add(CustomLocation(item.name, "Notes: ${item.name}", item.lat, item.lng, address, Config.LOCATION_TYPE_DEFAULT))
                 }
                 localRepository?.addLocations(list)
                 putPreference(Config.FIRST_TIME, Config.LAUNCH_DATA_RETRIEVED)

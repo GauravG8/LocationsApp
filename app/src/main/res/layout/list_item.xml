@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View" />
+        <import type="com.mylocations.utils.Config" />
         <variable
             name="viewModel"
             type="com.mylocations.list.adapters.LocationListItem"/>
@@ -27,6 +28,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/location_name"
                 android:text="@{viewModel.location.locationName}"
+                android:drawableRight="@{viewModel.location.type == 1 ? @drawable/ic_star : null}"
+                android:drawablePadding="5dp"
                 android:layout_alignParentLeft="true"
                 tools:text="Sydney"
                 android:textSize="22sp"

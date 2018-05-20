@@ -41,7 +41,6 @@ class AddLocationViewModel : ViewModel() {
     private fun convertAddressToString() {
         val sb = StringBuffer()
         sb.append(if (address!!.getAddressLine(0) != null) address!!.getAddressLine(0) else "")
-        sb.append(if (address!!.countryName != null) address!!.countryName else "")
         addressString.set(sb.toString())
     }
 
@@ -57,7 +56,7 @@ class AddLocationViewModel : ViewModel() {
      */
     fun saveLocation() {
         if (name.get() != null) {
-            repository.addLocation(CustomLocation(name.get(), if (notes.get() != null) notes.get() else "Notes: ${name.get()}", address!!.latitude, address!!.longitude, addressString.get()))
+            repository.addLocation(CustomLocation(name.get(), if (notes.get() != null) notes.get() else "Notes: ${name.get()}", address!!.latitude, address!!.longitude, addressString.get(), Config.LOCATION_TYPE_CUSTOM))
             locationAdded.value = true
         }else{
             if (name.get() == null) nameError.value = Config.LOCATION_NAME_ERROR

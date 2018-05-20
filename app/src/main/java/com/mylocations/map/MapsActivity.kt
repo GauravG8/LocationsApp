@@ -101,7 +101,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
             } else {
                 latLng = LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
             }
-            mNewMarker = mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin)).alpha(0.8f).draggable(true))
+            mNewMarker = mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin)).alpha(0.8f).zIndex(100f).draggable(true))
             mNewMarker!!.tag = -1
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
             setMarkerDetails(latLng)
@@ -258,6 +258,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
         mMap.clear()
         for (location in locations) {
             val marker = mMap.addMarker(MarkerOptions().position(LatLng(location.latitude, location.longitude)).title(location.locationName))
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(if (location.type == Config.LOCATION_TYPE_DEFAULT) BitmapDescriptorFactory.HUE_RED else BitmapDescriptorFactory.HUE_MAGENTA))
             marker.tag = location.id
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10.0f))

@@ -18,6 +18,8 @@ object Config {
     const val LOCATION_NAME_ERROR = "Enter a name for the location"
     const val LOCATION_NOTES_ERROR = "What do you like about this place?"
     const val NOTES_UPDATED = "Notes updated"
+    const val LOCATION_TYPE_DEFAULT = 1
+    const val LOCATION_TYPE_CUSTOM = 2
 
     /**
      * Get string address from latitude and longitude
