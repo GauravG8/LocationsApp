@@ -36,18 +36,5 @@ abstract class Db {
     @After
     fun close(){
         appDatabase.close()
-        resetSingleton(AppDatabase::class.java, "appDatabase")
-    }
-
-    private fun resetSingleton(clazz: Class<*>, fieldName: String) {
-        val instance: Field
-        try {
-            instance = clazz.getDeclaredField(fieldName)
-            instance.isAccessible = true
-            instance.set(null, null)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
     }
 }
