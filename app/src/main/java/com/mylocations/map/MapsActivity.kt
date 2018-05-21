@@ -201,16 +201,22 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
      * Start list activity passing the current location as an extra to calculate the distance
      */
     private fun startListActivity(){
-        val intent = Intent(this, LocationListActivity::class.java)
-        intent.putExtra(Config.EXTRA_ADDRESS, mLastKnownLocation)
-        startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        mViewModel.listItemLive.value = false
+        if(mLastKnownLocation != null) {
+            val intent = Intent(this, LocationListActivity::class.java)
+            intent.putExtra(Config.EXTRA_ADDRESS, mLastKnownLocation)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }else{
+            checkLocationPermission()
+        }
     }
 
     /**
      * Start add location activity passing the Address object which contains latitude and longitude
      */
     private fun startAddLocationActivity(){
+        mViewModel.selectLocationLive.value = false
         if (binding.markedLocation.tag != null) {
             val intent = Intent(this, AddLocationActivity::class.java)
             intent.putExtra(Config.EXTRA_ADDRESS, binding.markedLocation.tag as Address)
