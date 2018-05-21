@@ -3,6 +3,9 @@ package com.mylocations.repository.local
 import android.content.Context
 import com.mylocations.utils.Config
 
+/**
+ * Singleton class to retrieve the global instance for LocalRepository
+ */
 class LocalSingleton {
 
     companion object {

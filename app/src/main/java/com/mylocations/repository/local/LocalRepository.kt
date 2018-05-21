@@ -7,8 +7,13 @@ import com.mylocations.repository.models.CustomLocation
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
+/**
+ * Local Repository acts as the medium to communicate to Local database and shared preferences and returns the
+ * results to main Repository
+ */
 class LocalRepository(val appDatabase: AppDatabase?, val preferences: SharedPreferences) {
 
+    //Executor to run operations in background
     private val executor: Executor
 
     init {

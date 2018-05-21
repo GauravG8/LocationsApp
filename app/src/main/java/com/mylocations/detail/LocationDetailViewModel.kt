@@ -11,9 +11,15 @@ import com.mylocations.repository.Repository
 import com.mylocations.repository.models.CustomLocation
 import com.mylocations.utils.Config
 
+/**
+ * View model class for Location Detail
+ */
 class LocationDetailViewModel : ViewModel() {
 
-    var repository: Repository = MyApplication.getRepository()
+    //Communicates with the local and remote repository
+    var repository: Repository = MyApplication.getRepositoryInstance()
+
+    //Observable fields for data binding
     val notes = ObservableField<String>()
     val location = ObservableField<CustomLocation>()
     val editing = ObservableField<Boolean>(false)

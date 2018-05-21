@@ -14,8 +14,12 @@ import com.mylocations.repository.models.CustomLocation
 import com.mylocations.utils.Config
 import java.util.*
 
+/**
+ * View model class for Map View
+ */
 class MapViewModel : ViewModel() {
-    var repository : Repository = MyApplication.getRepository()
+    //Communicates with the local and remote repository
+    var repository : Repository = MyApplication.getRepositoryInstance()
 
     // LiveData variables observed in the activity
     val isLoading = MutableLiveData<Boolean>()

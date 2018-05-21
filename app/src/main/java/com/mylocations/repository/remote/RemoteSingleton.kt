@@ -2,6 +2,9 @@ package com.mylocations.repository.remote
 
 import android.content.Context
 
+/**
+ * Singleton class to retrieve the global instance for RemoteRepository
+ */
 class RemoteSingleton {
 
     companion object {

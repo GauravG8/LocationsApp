@@ -9,6 +9,10 @@ import java.net.URL
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
+/**
+ * Remote Repository acts as the medium to communicate to web services and returns the
+ * results to main Repository
+ */
 class RemoteRepository(val asset : AssetManager) {
 
     //Executor for performing work in a separate thread.

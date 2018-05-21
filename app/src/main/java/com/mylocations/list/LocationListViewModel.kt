@@ -9,9 +9,13 @@ import com.mylocations.repository.Repository
 import com.mylocations.repository.models.CustomLocation
 import com.mylocations.utils.Config
 
+/**
+ * View model class for Location List
+ */
 class LocationListViewModel() : ViewModel() {
 
-    var repository : Repository = MyApplication.getRepository()
+    //Communicates with the local and remote repository
+    var repository : Repository = MyApplication.getRepositoryInstance()
 
     // LiveData location list observed in the activity
     val locationList = MutableLiveData<List<LocationListItem>>()

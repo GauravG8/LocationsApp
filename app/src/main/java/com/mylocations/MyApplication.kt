@@ -6,11 +6,14 @@ import com.mylocations.repository.Repository
 import com.mylocations.repository.local.LocalSingleton
 import com.mylocations.repository.remote.RemoteSingleton
 
+/**
+ * Custom application class to provide a global instance for Repository
+ */
 class MyApplication : Application(){
 
     companion object {
         private lateinit var repository : Repository
-        fun getRepository() = repository
+        fun getRepositoryInstance() = repository
     }
 
     override fun onCreate() {

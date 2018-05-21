@@ -4,12 +4,15 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.view.MenuItem
+import android.widget.Toast
 import com.mylocations.detail.LocationDetailActivity
 import com.mylocations.utils.Config
 
 /**
- * Abstract class to display progress dialog and for toolbar home button functionality
+ * Abstract class to display progress dialog and for toolbar home button functionality.
+ * All activities extends this class.
  */
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -80,5 +83,11 @@ abstract class BaseActivity : AppCompatActivity() {
         intent.putExtra(Config.EXTRA_LOCATION_ID, id)
         startActivity(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    fun showToast(message: String){
+        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 200)
+        toast.show();
     }
 }

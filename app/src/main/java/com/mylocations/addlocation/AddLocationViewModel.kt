@@ -11,9 +11,14 @@ import com.mylocations.repository.Repository
 import com.mylocations.repository.models.CustomLocation
 import com.mylocations.utils.Config
 
+/**
+ * View Model class for Add Location.
+ */
 class AddLocationViewModel : ViewModel() {
 
-    var repository: Repository = MyApplication.getRepository()
+    //Communicates with the local and remote repository
+    var repository: Repository = MyApplication.getRepositoryInstance()
+
     // LiveData variables observed in the activity
     val nameError = MutableLiveData<String>() //Name edittext validation error
     val notesError = MutableLiveData<String>() //Notes edittext validation error

@@ -35,6 +35,7 @@ import com.mylocations.utils.Config
 import com.mylocations.addlocation.AddLocationActivity
 import com.mylocations.BaseActivity
 import com.mylocations.list.LocationListActivity
+import com.mylocations.managers.NetworkManager
 
 import java.util.*
 
@@ -92,7 +93,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
      * @param showMarker
      */
     private fun showOrHideMarker(showMarker: Boolean?){
-        if (showMarker == true) {
+        if (showMarker!!) {
             binding.selectLocation.animate().alpha(1.0f)
             binding.listItems.animate().alpha(0.0f)
             val latLng: LatLng
@@ -101,14 +102,14 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
             } else {
                 latLng = LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
             }
-            mNewMarker = mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin)).alpha(0.8f).zIndex(100f).draggable(true))
-            mNewMarker!!.tag = -1
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-            setMarkerDetails(latLng)
-            val toast = Toast.makeText(this, getString(R.string.drop_pin), Toast.LENGTH_SHORT)
-            toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 200)
-            toast.show();
-        }else{
+            if (::mMap.isInitialized) {
+                mNewMarker = mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin)).alpha(0.8f).zIndex(100f).draggable(true))
+                mNewMarker!!.tag = -1
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                setMarkerDetails(latLng)
+            }
+            showToast(getString(R.string.drop_pin))
+        } else {
             binding.selectLocation.animate().alpha(0.0f)
             binding.listItems.animate().alpha(1.0f)
             if (mNewMarker != null) mNewMarker!!.remove()
@@ -128,8 +129,14 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
 
         checkLocationPermission()
         updateLocationUI()
+        if (NetworkManager(applicationContext).isConnected!!.not()){
+            showToast(getString(R.string.network_connection))
+        }
     }
 
+    /**
+     * Check whether location permission is granted. Else, request from the user,
+     */
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.applicationContext, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationGranted = true
@@ -146,6 +153,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
                 mLocationGranted = false
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationGranted = true
+                    //get the current location if location permission has been granted
                     getCurrentLocation()
                 }
                 updateLocationUI()
@@ -178,6 +186,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
                 val locationResult = mFusedLocationClient!!.lastLocation
                 locationResult.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        //Store the current location
                         mLastKnownLocation = task.result
                     }
                 }
@@ -188,6 +197,9 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
 
     }
 
+    /**
+     * Start list activity passing the current location as an extra to calculate the distance
+     */
     private fun startListActivity(){
         val intent = Intent(this, LocationListActivity::class.java)
         intent.putExtra(Config.EXTRA_ADDRESS, mLastKnownLocation)
@@ -195,13 +207,19 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragL
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
-
+    /**
+     * Start add location activity passing the Address object which contains latitude and longitude
+     */
     private fun startAddLocationActivity(){
-        val intent = Intent(this, AddLocationActivity::class.java)
-        intent.putExtra(Config.EXTRA_ADDRESS, binding.markedLocation.tag as Address)
-        mViewModel.address.set(null)
-        startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        if (binding.markedLocation.tag != null) {
+            val intent = Intent(this, AddLocationActivity::class.java)
+            intent.putExtra(Config.EXTRA_ADDRESS, binding.markedLocation.tag as Address)
+            mViewModel.address.set(null)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }else{
+            showToast(getString(R.string.something_wrong))
+        }
     }
 
     override fun onMarkerDragStart(marker: Marker) {

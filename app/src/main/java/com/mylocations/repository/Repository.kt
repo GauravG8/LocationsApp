@@ -14,6 +14,10 @@ import org.json.JSONObject
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
+/**
+ * Repository acts as a medium between view model and data.
+ * Communicates with Local/Remote repository to get the data.
+ */
 class Repository(val localRepository: LocalRepository?, val remoteRepository: RemoteRepository?, val geoCoder: Geocoder? = null) {
 
     /**
